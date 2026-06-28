@@ -1,0 +1,26 @@
+# Local baseline — EA-LSTM trained from scratch on the 2-year warmup only.
+name: local_baseline_target
+stage: local_baseline
+seed: 42
+
+data:
+  source: camels
+  camels_root: data/CAMELS_US
+  target_basin: "11264500"
+  warmup_period: ["2015-01-01", "2016-12-31"]
+  validation_period: ["2016-09-01", "2016-12-31"]
+  sequence_length: 365
+
+model:
+  hidden_size: 256
+  dropout: 0.4
+
+training:
+  batch_size: 64
+  epochs: 50
+  patience: 10
+  head_lr: 1.0e-3
+
+output:
+  checkpoint_path: results/checkpoints/local_baseline.pt
+  history_path:    results/history/local_baseline.json

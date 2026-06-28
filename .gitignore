@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+.env
+
+# CAMELS (download separately — see data/README.md)
+# Ignore all downloaded data; keep only the docs/placeholder.
+data/*
+!data/README.md
+!data/readme.txt
+!data/.gitkeep
+*.zip
+
+# Generated outputs (created by pipeline scripts)
+results/
+
+# Local / cloud helper artifacts (not needed to reproduce)
+scripts/runpod/

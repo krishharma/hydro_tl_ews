@@ -1,0 +1,29 @@
+# Phase 2A — Conservative fine-tuning on a 2-year warmup of the target basin.
+# Freezes the LSTM cell and trains only the dense head.
+name: finetune_conservative_target
+stage: finetune_conservative
+seed: 42
+
+data:
+  source: camels
+  camels_root: data/CAMELS_US
+  target_basin: "11264500"              # Tuolumne River nr Hetch Hetchy (snowmelt)
+  warmup_period: ["2015-01-01", "2016-12-31"]
+  validation_period: ["2016-09-01", "2016-12-31"]
+  sequence_length: 365
+
+model:
+  pretrained_checkpoint: results/checkpoints/pretrain.pt
+  hidden_size: 256
+  dropout: 0.4
+
+training:
+  batch_size: 64
+  epochs: 5
+  patience: 3
+  head_lr: 1.0e-3
+  weight_decay: 0.0
+
+output:
+  checkpoint_path: results/checkpoints/finetune_conservative.pt
+  history_path:    results/history/finetune_conservative.json

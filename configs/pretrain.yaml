@@ -1,0 +1,35 @@
+# Phase 1 — Regional pre-training on the full CAMELS-US dataset.
+name: pretrain_camels_full
+stage: pretrain
+seed: 42
+
+data:
+  source: camels                        # camels | synthetic
+  camels_root: data/CAMELS_US           # path to CAMELS root (override at CLI)
+  target_basin: "11264500"              # any CAMELS gauge id (excluded from training)
+  exclusion_buffer_km: 50               # exclude basins within this radius of the target
+  pretrain_period: ["1980-10-01", "2010-09-30"]
+  validation_period: ["2010-10-01", "2014-09-30"]
+  sequence_length: 365
+  num_workers: 4
+  static_feature_set: full              # full | reduced
+
+model:
+  hidden_size: 256
+  dropout: 0.4
+  initial_forget_bias: 3.0
+
+training:
+  batch_size: 256
+  epochs: 50
+  patience: 10
+  learning_rate: 1.0e-3
+  weight_decay: 0.0
+  clip_grad_norm: 1.0
+
+evaluation:
+  metrics: [NSE, KGE, PBIAS]
+
+output:
+  checkpoint_path: results/checkpoints/pretrain.pt
+  history_path:    results/history/pretrain.json

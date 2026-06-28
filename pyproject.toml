@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hydro_tl_ews"
+version = "0.1.0"
+description = "Transfer learning + walk-forward EA-LSTM for hydrological early warning in data-scarce basins"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Krish Sharma"}]
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "pyyaml>=6.0",
+  "scikit-learn>=1.3",
+  "torch>=2.0",
+  "shap>=0.44",
+  "matplotlib>=3.7",
+  "pyarrow>=14.0",
+]
+
+[project.optional-dependencies]
+nwis = ["dataretrieval>=1.0"]
+dev = ["pytest>=7", "pytest-cov", "ruff"]
+
+[project.scripts]
+hydro-tl-ews = "scripts.run_experiment:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"

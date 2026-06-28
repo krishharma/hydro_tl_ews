@@ -1,0 +1,18 @@
+name: hydro_tl_ews
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy>=1.24
+  - pandas>=2.0
+  - pyyaml>=6.0
+  - scikit-learn>=1.3
+  - matplotlib>=3.7
+  - pyarrow>=14.0
+  - pytorch>=2.0
+  - cpuonly
+  - pip
+  - pip:
+      - shap>=0.44
+      - dataretrieval>=1.0

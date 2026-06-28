@@ -1,0 +1,31 @@
+# Phase 2B — Progressive unfreezing (last 25% of LSTM, differential LR).
+name: finetune_progressive_target
+stage: finetune_progressive
+seed: 42
+
+data:
+  source: camels
+  camels_root: data/CAMELS_US
+  target_basin: "11264500"
+  warmup_period: ["2015-01-01", "2016-12-31"]
+  validation_period: ["2016-09-01", "2016-12-31"]
+  sequence_length: 365
+
+model:
+  pretrained_checkpoint: results/checkpoints/pretrain.pt
+  hidden_size: 256
+  dropout: 0.4
+
+training:
+  batch_size: 64
+  epochs_head_only: 5
+  epochs_progressive: 5
+  patience: 3
+  head_lr: 1.0e-3
+  lstm_lr: 1.0e-5
+  unfreeze_fraction: 0.25
+  weight_decay: 0.0
+
+output:
+  checkpoint_path: results/checkpoints/finetune_progressive.pt
+  history_path:    results/history/finetune_progressive.json

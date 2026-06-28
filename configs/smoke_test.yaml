@@ -1,0 +1,44 @@
+# Fast smoke test: 12 synthetic basins, 1 snowmelt target, 6 epochs.
+name: smoke_test
+stage: walk_forward
+seed: 7
+
+data:
+  source: synthetic
+  n_basins: 12
+  snow_fraction: 0.4
+  n_days: 3650
+  target_basin_index: 0     # selected as the most snow-dominated synthetic basin
+  sequence_length: 90       # short for CPU friendliness
+
+model:
+  hidden_size: 32
+  dropout: 0.2
+
+training:
+  batch_size: 64
+  pretrain_epochs: 4
+  pretrain_patience: 3
+  finetune_epochs: 3
+  finetune_patience: 2
+  local_baseline_epochs: 6
+  head_lr: 1.0e-3
+  lstm_lr: 1.0e-5
+
+walk_forward:
+  initial_train_end: "1996-12-31"
+  eval_end: "1999-12-31"
+  refit_every_days: 90
+  online_bias_correction: true
+
+evaluation:
+  thresholds: [q95, q99, q5]
+  lead_times: [1, 3, 7]
+
+xai:
+  enabled: true
+  background_size: 64
+  sample_size: 32
+
+output:
+  results_dir: results/smoke
